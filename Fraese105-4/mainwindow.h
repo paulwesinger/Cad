@@ -29,8 +29,13 @@ public:
 public slots:
 
     void menuEinstellungen();
+    void addLayer();
+    void RemoveLayer();
+    void LayerCellChanged(int row, int col);
+
     void tbRectangleClick();
     void tbLineClick();
+
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +49,9 @@ private:
 
     void init();
     void initConnections();
+    void initLayerWidget();
+    void setDarkColorShem();
+    void setLightColorShem();
 
 };
 

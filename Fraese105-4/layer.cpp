@@ -58,7 +58,6 @@ LayerWidget::LayerWidget()
     _ActiveLayer = 0;
     _SelectedLayer = 0;
     addRow("Test1");
-    update(0);
 }
 
 LayerWidget::LayerWidget(QTableWidget * tbw)
@@ -69,11 +68,20 @@ LayerWidget::LayerWidget(QTableWidget * tbw)
     _ActiveLayer = 0;
     _SelectedLayer = 0;
     addRow("Test");
-    update(0);
 }
 
 LayerWidget::~LayerWidget() {
     layers.clear();
+}
+
+void LayerWidget::initConnections() {
+
+}
+//----------------------------------------------------------
+// slots
+//----------------------------------------------------------
+void LayerWidget::layerNameChanged(){
+
 }
 
 void LayerWidget::addRow(QString name){
@@ -93,7 +101,8 @@ void LayerWidget::addRow(QString name){
         QCheckBox * cbVis = new QCheckBox();
         QCheckBox * cbLocked = new QCheckBox();
         QTableWidgetItem * wiName = new QTableWidgetItem(name);
-
+        QWidget* wColor  = new QWidget();
+        wColor->setStyleSheet("background-color:greenyellow");
         cbVis->setChecked(true);
         cbLocked->setChecked(false);
 
@@ -101,14 +110,15 @@ void LayerWidget::addRow(QString name){
         tableWidget->setCellWidget(row,0,cbVis);
         tableWidget->setCellWidget(row,1,cbLocked);
         tableWidget->setItem(row,2,wiName);
+        tableWidget->setCellWidget(row,3,wColor);
+
     }
 }
 
-void LayerWidget::update(int i) {
-    if (tableWidget) {
-        for (int i = 0; i < layers.size(); i++ )   {
+void LayerWidget::updateName(int row, QString name) {
+    layers[row].setLayerName(name);
+}
 
-        }
+void LayerWidget::updateColor(int row, QColor col) {
 
-    }
 }

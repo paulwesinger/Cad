@@ -38,30 +38,60 @@ void MainWindow::init() {
     //------------------------------------------
     einstellungen = new Einstellungen(this);
 
+    initLayerWidget();
+    setDarkColorShem();
+}
+
+void MainWindow::initLayerWidget() {
     //------------------------------------------
     // resize colums
     //------------------------------------------
     ui->tableWidget->horizontalHeader()->resizeSection(0,60);
     ui->tableWidget->horizontalHeader()->resizeSection(1,60);
-    ui->tableWidget->horizontalHeader()->resizeSection(2,80);
+    ui->tableWidget->horizontalHeader()->resizeSection(2,100);
+    ui->tableWidget->horizontalHeader()->resizeSection(3,50);
     ui->tableWidget->horizontalHeader()->stretchSectionCount();
+
+    QPixmap pxAdd("../../resources/Add32x32.png");
+    QIcon iconAdd(pxAdd);
+    ui->tbAddLayer->setIcon(iconAdd);
+
+    QPixmap pxRemove("../../resources/Minus32x32.png");
+    QIcon iconRemove(pxRemove);
+    ui->tbRemoveLayer->setIcon(iconRemove);
+
+
+
 
     QStringList list;
     list.push_back("Visible");
     list.push_back("Locked");
     list.push_back("Name");
-
+    list.push_back("Farbe");
 
     ui->tableWidget->setHorizontalHeaderLabels(list);
     layerwidget = new LayerWidget(ui->tableWidget);
 
+    connect(ui->tableWidget,&QTableWidget::cellChanged,this,&MainWindow::LayerCellChanged);
+
+
+
+}
+
+void MainWindow::setDarkColorShem(){
+    setStyleSheet("background-color:#373737");
     ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
     ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
-    ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+    ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;background-color:#373737;");
+    ui->drawingwidget->setStyleSheet("background-color:lightcyan;");
+}
 
-
-
-
+void MainWindow::setLightColorShem() {
+    setStyleSheet("background-color:#8cbcf7");
+    ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+    ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
+    ui->gbLayer->setStyleSheet("color:blue;border-color:blue;foreground-color:blue;selection-color:yellow;");
+    ui->drawingwidget->setStyleSheet("background-color:lightcyan;");
 }
 
 void MainWindow::initConnections(){
@@ -73,10 +103,17 @@ void MainWindow::initConnections(){
 
 
     //------------------------------------------
-    // Menubar actions
+    // Toolbar clicks
     //------------------------------------------
     connect(ui->pbRect ,&QPushButton::clicked,this ,&MainWindow::tbRectangleClick);
     connect(ui->tbLine ,&QToolButton::clicked,this ,&MainWindow::tbLineClick);
+
+
+    //------------------------------------------
+    // Layer clicks
+    //------------------------------------------
+    connect(ui->tbAddLayer,&QToolButton::clicked,this,&MainWindow::addLayer);
+    connect(ui->tbRemoveLayer,&QToolButton::clicked,this,&MainWindow::RemoveLayer);
 }
 
 
@@ -88,27 +125,35 @@ void MainWindow::menuEinstellungen(){
 
 
     if (einstellungen) {
-        einstellungen ->exec();
+        if (einstellungen ->exec()== QDialog::Accepted) {
 
-        if (einstellungen->getColorSchem() == ColorShem::DARK) {
-            setStyleSheet("background-color:#373737");
-            ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
-            ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
-            ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
-
+            if (einstellungen->getColorSchem() == ColorShem::DARK)
+                setDarkColorShem();
+             else
+                setLightColorShem();
         }
-        else {
-
-            setStyleSheet("background-color:#8cbcf7");
-            ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
-            ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
-            ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
-
-        }
-
-
     }
 }
+
+void MainWindow::addLayer(){
+    layerwidget->addRow("<>");
+}
+
+void MainWindow::RemoveLayer(){
+
+}
+
+void MainWindow::LayerCellChanged(int row, int col) {
+    if (col == 2) {  // name
+        QString name = ui->tableWidget->item(row,col)->text();
+        layerwidget->updateName(row,name);
+    }
+}
+
+
+
+
+
 
 void MainWindow::tbRectangleClick() {
     ui->textEdit->append("Rect");
@@ -125,6 +170,10 @@ void MainWindow::tbLineClick() {
 
 
 
+
+//------------------------------------------
+// class for adjustment(Einstellungen)
+//------------------------------------------
 
 Einstellungen::Einstellungen(QWidget * parent):
     QDialog(parent)

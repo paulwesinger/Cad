@@ -60,9 +60,15 @@ public:
     LayerWidget(QTableWidget * tbw);
     ~LayerWidget();
     void addRow(QString name);
-    void update(int i);
+    void updateName(int row, QString name);
+    void updateColor(int row, QColor col);
 
+protected slots:
+    void layerNameChanged();
 private:
+
+    void initConnections();
+
     QVector<Layer> layers;
     uint _ActiveLayer;
     uint _SelectedLayer;

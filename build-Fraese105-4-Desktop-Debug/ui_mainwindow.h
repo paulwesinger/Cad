@@ -45,6 +45,8 @@ public:
     QTextEdit *textEdit;
     QGroupBox *gbLayer;
     QTableWidget *tableWidget;
+    QToolButton *tbAddLayer;
+    QToolButton *tbRemoveLayer;
     QMenuBar *menubar;
     QMenu *menuBearbeiten;
     QMenu *menuTools;
@@ -79,15 +81,15 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         drawingwidget = new QWidget(centralwidget);
         drawingwidget->setObjectName(QString::fromUtf8("drawingwidget"));
-        drawingwidget->setGeometry(QRect(260, 130, 1471, 801));
+        drawingwidget->setGeometry(QRect(320, 90, 1421, 841));
         drawingwidget->setAutoFillBackground(false);
         toolBox = new QToolBox(centralwidget);
         toolBox->setObjectName(QString::fromUtf8("toolBox"));
-        toolBox->setGeometry(QRect(0, 353, 131, 311));
+        toolBox->setGeometry(QRect(0, 353, 311, 311));
         toolBox->setFrameShape(QFrame::Panel);
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        page->setGeometry(QRect(0, 0, 129, 243));
+        page->setGeometry(QRect(0, 0, 309, 243));
         tbLine = new QToolButton(page);
         tbLine->setObjectName(QString::fromUtf8("tbLine"));
         tbLine->setGeometry(QRect(10, 40, 81, 26));
@@ -98,25 +100,31 @@ public:
         toolBox->addItem(page, QString::fromUtf8("Primitives"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 129, 243));
+        page_2->setGeometry(QRect(0, 0, 309, 243));
         toolBox->addItem(page_2, QString::fromUtf8("tools"));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(0, 670, 131, 251));
+        textEdit->setGeometry(QRect(0, 670, 311, 251));
         gbLayer = new QGroupBox(centralwidget);
         gbLayer->setObjectName(QString::fromUtf8("gbLayer"));
-        gbLayer->setGeometry(QRect(0, 70, 251, 271));
+        gbLayer->setGeometry(QRect(0, 50, 311, 291));
         tableWidget = new QTableWidget(gbLayer);
-        if (tableWidget->columnCount() < 3)
-            tableWidget->setColumnCount(3);
-        if (tableWidget->rowCount() < 1)
-            tableWidget->setRowCount(1);
+        if (tableWidget->columnCount() < 4)
+            tableWidget->setColumnCount(4);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(10, 30, 231, 201));
+        tableWidget->setGeometry(QRect(10, 30, 291, 201));
         tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
         tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-        tableWidget->setRowCount(1);
-        tableWidget->setColumnCount(3);
+        tableWidget->setRowCount(0);
+        tableWidget->setColumnCount(4);
+        tbAddLayer = new QToolButton(gbLayer);
+        tbAddLayer->setObjectName(QString::fromUtf8("tbAddLayer"));
+        tbAddLayer->setGeometry(QRect(10, 240, 26, 26));
+        tbAddLayer->setIconSize(QSize(16, 16));
+        tbRemoveLayer = new QToolButton(gbLayer);
+        tbRemoveLayer->setObjectName(QString::fromUtf8("tbRemoveLayer"));
+        tbRemoveLayer->setGeometry(QRect(50, 240, 26, 26));
+        tbRemoveLayer->setIconSize(QSize(16, 16));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -139,7 +147,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
 
-        toolBox->setCurrentIndex(0);
+        toolBox->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -157,6 +165,8 @@ public:
         toolBox->setItemText(toolBox->indexOf(page), QCoreApplication::translate("MainWindow", "Primitives", nullptr));
         toolBox->setItemText(toolBox->indexOf(page_2), QCoreApplication::translate("MainWindow", "tools", nullptr));
         gbLayer->setTitle(QCoreApplication::translate("MainWindow", "Layer", nullptr));
+        tbAddLayer->setText(QCoreApplication::translate("MainWindow", "...", nullptr));
+        tbRemoveLayer->setText(QCoreApplication::translate("MainWindow", "...", nullptr));
         menuBearbeiten->setTitle(QCoreApplication::translate("MainWindow", "Datei", nullptr));
         menuTools->setTitle(QCoreApplication::translate("MainWindow", "Bearbeiten", nullptr));
     } // retranslateUi
