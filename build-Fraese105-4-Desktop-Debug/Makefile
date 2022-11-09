@@ -52,12 +52,18 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../Fraese105-4/main.cpp \
+SOURCES       = ../Fraese105-4/einstellungendialog.cpp \
+		../Fraese105-4/main.cpp \
 		../Fraese105-4/mainwindow.cpp \
-		../Fraese105-4/layer.cpp moc_mainwindow.cpp
-OBJECTS       = main.o \
+		../Fraese105-4/layer.cpp qrc_resources.cpp \
+		moc_einstellungendialog.cpp \
+		moc_mainwindow.cpp
+OBJECTS       = einstellungendialog.o \
+		main.o \
 		mainwindow.o \
 		layer.o \
+		qrc_resources.o \
+		moc_einstellungendialog.o \
 		moc_mainwindow.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -137,8 +143,10 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/exceptions.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
-		../Fraese105-4/Fraese105-4.pro ../Fraese105-4/mainwindow.h \
-		../Fraese105-4/layer.h ../Fraese105-4/main.cpp \
+		../Fraese105-4/Fraese105-4.pro ../Fraese105-4/einstellungendialog.h \
+		../Fraese105-4/mainwindow.h \
+		../Fraese105-4/layer.h ../Fraese105-4/einstellungendialog.cpp \
+		../Fraese105-4/main.cpp \
 		../Fraese105-4/mainwindow.cpp \
 		../Fraese105-4/layer.cpp
 QMAKE_TARGET  = Fraese105-4
@@ -149,7 +157,7 @@ TARGET        = Fraese105-4
 first: all
 ####### Build rules
 
-Fraese105-4: ui_mainwindow.h $(OBJECTS)  
+Fraese105-4: ui_einstellungendialog.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Fraese105-4/Fraese105-4.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -230,7 +238,8 @@ Makefile: ../Fraese105-4/Fraese105-4.pro /../lib64/qt5/mkspecs/linux-g++/qmake.c
 		/../lib64/qt5/mkspecs/features/exceptions.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
-		../Fraese105-4/Fraese105-4.pro
+		../Fraese105-4/Fraese105-4.pro \
+		../../resources/resources.qrc
 	$(QMAKE) -o Makefile ../Fraese105-4/Fraese105-4.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /../lib64/qt5/mkspecs/features/spec_pre.prf:
 /usr/lib64/qt5/mkspecs/common/unix.conf:
@@ -311,6 +320,7 @@ Makefile: ../Fraese105-4/Fraese105-4.pro /../lib64/qt5/mkspecs/linux-g++/qmake.c
 /../lib64/qt5/mkspecs/features/yacc.prf:
 /../lib64/qt5/mkspecs/features/lex.prf:
 ../Fraese105-4/Fraese105-4.pro:
+../../resources/resources.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Fraese105-4/Fraese105-4.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 
@@ -325,10 +335,11 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../../resources/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Fraese105-4/mainwindow.h ../Fraese105-4/layer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.cpp ../Fraese105-4/layer.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Fraese105-4/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.h ../Fraese105-4/mainwindow.h ../Fraese105-4/layer.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.cpp ../Fraese105-4/layer.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.ui ../Fraese105-4/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -352,19 +363,31 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: ../../resources/resources.qrc \
+		/../lib64/qt5/bin/rcc \
+		../../resources/lock.jpg
+	/../lib64/qt5/bin/rcc -name resources ../../resources/resources.qrc -o qrc_resources.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_einstellungendialog.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_einstellungendialog.cpp moc_mainwindow.cpp
+moc_einstellungendialog.cpp: ../Fraese105-4/einstellungendialog.h \
+		moc_predefs.h \
+		/../lib64/qt5/bin/moc
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/einstellungendialog.h -o moc_einstellungendialog.cpp
+
 moc_mainwindow.cpp: ../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h \
+		../Fraese105-4/einstellungendialog.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
 	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/mainwindow.h -o moc_mainwindow.cpp
@@ -373,9 +396,13 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_einstellungendialog.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_einstellungendialog.h ui_mainwindow.h
+ui_einstellungendialog.h: ../Fraese105-4/einstellungendialog.ui \
+		/../lib64/qt5/bin/uic
+	/../lib64/qt5/bin/uic ../Fraese105-4/einstellungendialog.ui -o ui_einstellungendialog.h
+
 ui_mainwindow.h: ../Fraese105-4/mainwindow.ui \
 		/../lib64/qt5/bin/uic
 	/../lib64/qt5/bin/uic ../Fraese105-4/mainwindow.ui -o ui_mainwindow.h
@@ -386,21 +413,34 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
+einstellungendialog.o: ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/einstellungendialog.h \
+		ui_einstellungendialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o einstellungendialog.o ../Fraese105-4/einstellungendialog.cpp
+
 main.o: ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.h \
-		../Fraese105-4/layer.h
+		../Fraese105-4/layer.h \
+		../Fraese105-4/einstellungendialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Fraese105-4/main.cpp
 
 mainwindow.o: ../Fraese105-4/mainwindow.cpp ../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h \
+		../Fraese105-4/einstellungendialog.h \
+		ui_einstellungendialog.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Fraese105-4/mainwindow.cpp
 
 layer.o: ../Fraese105-4/layer.cpp ../Fraese105-4/layer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o layer.o ../Fraese105-4/layer.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
+
+moc_einstellungendialog.o: moc_einstellungendialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_einstellungendialog.o moc_einstellungendialog.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

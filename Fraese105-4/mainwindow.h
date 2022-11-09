@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include "layer.h"
+#include "einstellungendialog.h"
 
 
 
@@ -12,6 +13,10 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+
+class Einstellungen;
+
 
 class MainWindow : public QMainWindow
 {
@@ -29,7 +34,10 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+
+
     LayerWidget * layerwidget;
+    Einstellungen * einstellungen;
 
     //  QGraphicsScene * graphicsScene;
   //  QGraphicsView * graphicsView;
@@ -38,4 +46,16 @@ private:
     void initConnections();
 
 };
+
+
+
+class Einstellungen : public QDialog
+{
+public:
+    Einstellungen(QWidget * parent = NULL);
+    ColorShem getColorSchem();
+private:
+    Ui::EinstellungenDialog * ui_Einstellungen;
+};
+
 #endif // MAINWINDOW_H

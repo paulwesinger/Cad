@@ -1,6 +1,7 @@
 #include <QMessageBox>
 
 #include "mainwindow.h"
+#include "ui_einstellungendialog.h"
 #include "ui_mainwindow.h"
 
 
@@ -18,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete einstellungen;
 }
 
 void MainWindow::init() {
@@ -29,6 +31,12 @@ void MainWindow::init() {
 //#62a0ea                         "background-color: yellow;"
   //  "selection-color: yellow;"
   //  "selection-background-color: blue;");
+
+
+    //------------------------------------------
+    // add dialogs
+    //------------------------------------------
+    einstellungen = new Einstellungen(this);
 
     //------------------------------------------
     // resize colums
@@ -50,6 +58,10 @@ void MainWindow::init() {
     ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
     ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
     ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+
+
+
+
 }
 
 void MainWindow::initConnections(){
@@ -74,10 +86,28 @@ void MainWindow::initConnections(){
 //------------------------------------------
 void MainWindow::menuEinstellungen(){
 
-    if (QMessageBox::information(this,"Info","Einstellungen") == QMessageBox::Ok) {
+
+    if (einstellungen) {
+        einstellungen ->exec();
+
+        if (einstellungen->getColorSchem() == ColorShem::DARK) {
+            setStyleSheet("background-color:#373737");
+            ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+            ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
+            ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+
+        }
+        else {
+
+            setStyleSheet("background-color:#8cbcf7");
+            ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+            ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
+            ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
+
+        }
+
 
     }
-
 }
 
 void MainWindow::tbRectangleClick() {
@@ -92,3 +122,20 @@ void MainWindow::tbLineClick() {
 //     graphicsScene->invalidate();
 }
 
+
+
+
+
+Einstellungen::Einstellungen(QWidget * parent):
+    QDialog(parent)
+{
+    ui_Einstellungen = new Ui::EinstellungenDialog();
+    ui_Einstellungen->setupUi(this);
+}
+
+
+ColorShem Einstellungen::getColorSchem(){
+    if (ui_Einstellungen->rbColorScheme_Dark->isChecked())
+        return ColorShem::DARK;
+    return ColorShem::LIGHT;
+}
