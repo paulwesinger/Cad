@@ -67,7 +67,9 @@ LayerWidget::LayerWidget(QTableWidget * tbw)
 
     _ActiveLayer = 0;
     _SelectedLayer = 0;
+
     addRow("Test");
+    currentColor = layers[0].getLayerColor();
 }
 
 LayerWidget::~LayerWidget() {
@@ -77,13 +79,13 @@ LayerWidget::~LayerWidget() {
 void LayerWidget::initConnections() {
 
 }
+
+QColor LayerWidget::getCurrentColor() {
+    return currentColor;
+}
 //----------------------------------------------------------
 // slots
 //----------------------------------------------------------
-void LayerWidget::layerNameChanged(){
-
-}
-
 void LayerWidget::addRow(QString name){
 
     if (tableWidget) {
@@ -111,7 +113,6 @@ void LayerWidget::addRow(QString name){
         tableWidget->setCellWidget(row,1,cbLocked);
         tableWidget->setItem(row,2,wiName);
         tableWidget->setCellWidget(row,3,wColor);
-
     }
 }
 
@@ -120,5 +121,14 @@ void LayerWidget::updateName(int row, QString name) {
 }
 
 void LayerWidget::updateColor(int row, QColor col) {
+    QString qss;
+    if(col.isValid()) {
+       qss = QString("background-color: %1").arg(col.name());
+    }
 
+    if (tableWidget) {
+        QWidget* w = tableWidget->cellWidget(row,3);
+        w->setStyleSheet(qss);
+    }
+    currentColor = col;
 }

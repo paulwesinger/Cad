@@ -10,6 +10,12 @@
     <height>972</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="palette">
    <palette>
     <active>
@@ -78,77 +84,184 @@
    <string>Qt5</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="drawingwidget" native="true">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>90</y>
-      <width>1421</width>
-      <height>841</height>
+      <x>10</x>
+      <y>60</y>
+      <width>320</width>
+      <height>411</height>
      </rect>
     </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <property name="columnCount">
+     <number>4</number>
+    </property>
+    <column/>
+    <column/>
+    <column/>
+    <column/>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>480</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="tbAddLayer">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbRemoveLayer">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
    <widget class="QToolBox" name="toolBox">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>353</y>
-      <width>311</width>
-      <height>311</height>
+      <x>10</x>
+      <y>540</y>
+      <width>320</width>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>309</width>
-       <height>243</height>
+       <width>318</width>
+       <height>93</height>
       </rect>
      </property>
      <attribute name="label">
       <string>Primitives</string>
      </attribute>
-     <widget class="QToolButton" name="tbLine">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>81</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Line</string>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pbRect">
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>87</width>
-        <height>27</height>
+        <width>291</width>
+        <height>31</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Rect</string>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pbRect">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>rectanhle</string>
+         </property>
+         <property name="text">
+          <string>Rect</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/icons/icons/Cube.png</normaloff>:/icons/icons/Cube.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tbLine">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Line</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="page_2">
@@ -156,8 +269,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>309</width>
-       <height>243</height>
+       <width>318</width>
+       <height>93</height>
       </rect>
      </property>
      <attribute name="label">
@@ -168,89 +281,34 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>670</y>
-      <width>311</width>
-      <height>251</height>
+      <x>10</x>
+      <y>720</y>
+      <width>320</width>
+      <height>192</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
     </property>
    </widget>
-   <widget class="QGroupBox" name="gbLayer">
+   <widget class="QWidget" name="drawingwidget" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>311</width>
-      <height>291</height>
+      <x>340</x>
+      <y>60</y>
+      <width>1391</width>
+      <height>851</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Layer</string>
-    </property>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>291</width>
-       <height>201</height>
-      </rect>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="rowCount">
-      <number>0</number>
-     </property>
-     <property name="columnCount">
-      <number>4</number>
-     </property>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-    </widget>
-    <widget class="QToolButton" name="tbAddLayer">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>240</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="tbRemoveLayer">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>240</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -262,33 +320,8 @@
      <height>24</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuBearbeiten">
-    <property name="title">
-     <string>Datei</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Bearbeiten</string>
-    </property>
-    <addaction name="actionEinstellungen"/>
-    <addaction name="separator"/>
-   </widget>
-   <addaction name="menuBearbeiten"/>
-   <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionRect">
-   <property name="text">
-    <string>Rect</string>
-   </property>
-  </action>
-  <action name="actionLine">
-   <property name="text">
-    <string>Line</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
@@ -296,11 +329,13 @@
   </action>
   <action name="actionEinstellungen">
    <property name="text">
-    <string>Einstellungen...</string>
+    <string>Einstellungen</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>

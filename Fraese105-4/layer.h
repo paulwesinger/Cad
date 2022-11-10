@@ -62,14 +62,15 @@ public:
     void addRow(QString name);
     void updateName(int row, QString name);
     void updateColor(int row, QColor col);
+    QColor getCurrentColor();
 
-protected slots:
-    void layerNameChanged();
 private:
 
     void initConnections();
 
+    QColor currentColor;
     QVector<Layer> layers;
+
     uint _ActiveLayer;
     uint _SelectedLayer;
 

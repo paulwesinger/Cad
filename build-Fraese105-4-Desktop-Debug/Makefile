@@ -55,14 +55,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Fraese105-4/einstellungendialog.cpp \
 		../Fraese105-4/main.cpp \
 		../Fraese105-4/mainwindow.cpp \
-		../Fraese105-4/layer.cpp qrc_resources.cpp \
+		../Fraese105-4/layer.cpp qrc_icons.cpp \
 		moc_einstellungendialog.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = einstellungendialog.o \
 		main.o \
 		mainwindow.o \
 		layer.o \
-		qrc_resources.o \
+		qrc_icons.o \
 		moc_einstellungendialog.o \
 		moc_mainwindow.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -239,7 +239,7 @@ Makefile: ../Fraese105-4/Fraese105-4.pro /../lib64/qt5/mkspecs/linux-g++/qmake.c
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		../Fraese105-4/Fraese105-4.pro \
-		../../resources/resources.qrc
+		../Fraese105-4/icons.qrc
 	$(QMAKE) -o Makefile ../Fraese105-4/Fraese105-4.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /../lib64/qt5/mkspecs/features/spec_pre.prf:
 /usr/lib64/qt5/mkspecs/common/unix.conf:
@@ -320,7 +320,7 @@ Makefile: ../Fraese105-4/Fraese105-4.pro /../lib64/qt5/mkspecs/linux-g++/qmake.c
 /../lib64/qt5/mkspecs/features/yacc.prf:
 /../lib64/qt5/mkspecs/features/lex.prf:
 ../Fraese105-4/Fraese105-4.pro:
-../../resources/resources.qrc:
+../Fraese105-4/icons.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Fraese105-4/Fraese105-4.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 
@@ -335,7 +335,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../resources/resources.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/icons.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.h ../Fraese105-4/mainwindow.h ../Fraese105-4/layer.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.cpp ../Fraese105-4/layer.cpp $(DISTDIR)/
@@ -363,13 +363,15 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_resources.cpp
+compiler_rcc_make_all: qrc_icons.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_resources.cpp
-qrc_resources.cpp: ../../resources/resources.qrc \
+	-$(DEL_FILE) qrc_icons.cpp
+qrc_icons.cpp: ../Fraese105-4/icons.qrc \
 		/../lib64/qt5/bin/rcc \
-		../../resources/lock.jpg
-	/../lib64/qt5/bin/rcc -name resources ../../resources/resources.qrc -o qrc_resources.cpp
+		../Fraese105-4/icons/Add32x32.png \
+		../Fraese105-4/icons/Cube.png \
+		../Fraese105-4/icons/Minus32x32.png
+	/../lib64/qt5/bin/rcc -name icons ../Fraese105-4/icons.qrc -o qrc_icons.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
@@ -436,8 +438,8 @@ mainwindow.o: ../Fraese105-4/mainwindow.cpp ../Fraese105-4/mainwindow.h \
 layer.o: ../Fraese105-4/layer.cpp ../Fraese105-4/layer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o layer.o ../Fraese105-4/layer.cpp
 
-qrc_resources.o: qrc_resources.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
+qrc_icons.o: qrc_icons.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_icons.o qrc_icons.cpp
 
 moc_einstellungendialog.o: moc_einstellungendialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_einstellungendialog.o moc_einstellungendialog.cpp

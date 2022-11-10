@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[10];
-    char stringdata0[105];
+    QByteArrayData data[11];
+    char stringdata0[122];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,13 +40,15 @@ QT_MOC_LITERAL(4, 39, 11), // "RemoveLayer"
 QT_MOC_LITERAL(5, 51, 16), // "LayerCellChanged"
 QT_MOC_LITERAL(6, 68, 3), // "row"
 QT_MOC_LITERAL(7, 72, 3), // "col"
-QT_MOC_LITERAL(8, 76, 16), // "tbRectangleClick"
-QT_MOC_LITERAL(9, 93, 11) // "tbLineClick"
+QT_MOC_LITERAL(8, 76, 16), // "LayerCellClicked"
+QT_MOC_LITERAL(9, 93, 16), // "tbRectangleClick"
+QT_MOC_LITERAL(10, 110, 11) // "tbLineClick"
 
     },
     "MainWindow\0menuEinstellungen\0\0addLayer\0"
     "RemoveLayer\0LayerCellChanged\0row\0col\0"
-    "tbRectangleClick\0tbLineClick"
+    "LayerCellClicked\0tbRectangleClick\0"
+    "tbLineClick"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +58,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,17 +66,19 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x0a /* Public */,
-       3,    0,   45,    2, 0x0a /* Public */,
-       4,    0,   46,    2, 0x0a /* Public */,
-       5,    2,   47,    2, 0x0a /* Public */,
-       8,    0,   52,    2, 0x0a /* Public */,
-       9,    0,   53,    2, 0x0a /* Public */,
+       1,    0,   49,    2, 0x0a /* Public */,
+       3,    0,   50,    2, 0x0a /* Public */,
+       4,    0,   51,    2, 0x0a /* Public */,
+       5,    2,   52,    2, 0x0a /* Public */,
+       8,    2,   57,    2, 0x0a /* Public */,
+       9,    0,   62,    2, 0x0a /* Public */,
+      10,    0,   63,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    6,    7,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    6,    7,
     QMetaType::Void,
     QMetaType::Void,
@@ -92,8 +96,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->addLayer(); break;
         case 2: _t->RemoveLayer(); break;
         case 3: _t->LayerCellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 4: _t->tbRectangleClick(); break;
-        case 5: _t->tbLineClick(); break;
+        case 4: _t->LayerCellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 5: _t->tbRectangleClick(); break;
+        case 6: _t->tbLineClick(); break;
         default: ;
         }
     }
@@ -128,13 +133,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QColorDialog>
 
 #include "mainwindow.h"
 #include "ui_einstellungendialog.h"
@@ -73,6 +74,8 @@ void MainWindow::initLayerWidget() {
     layerwidget = new LayerWidget(ui->tableWidget);
 
     connect(ui->tableWidget,&QTableWidget::cellChanged,this,&MainWindow::LayerCellChanged);
+    connect(ui->tableWidget,&QTableWidget::cellClicked,this,&MainWindow::LayerCellClicked);
+
 
 
 
@@ -82,7 +85,7 @@ void MainWindow::setDarkColorShem(){
     setStyleSheet("background-color:#373737");
     ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
     ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
-    ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;background-color:#373737;");
+  //  ui->gbLayer->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;background-color:#373737;");
     ui->drawingwidget->setStyleSheet("background-color:lightcyan;");
 }
 
@@ -90,7 +93,7 @@ void MainWindow::setLightColorShem() {
     setStyleSheet("background-color:#8cbcf7");
     ui->toolBox->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;");
     ui->textEdit->setStyleSheet("color:#62a0ea;border-color:lightblue;foreground-color:lightblue;selection-color:blue;selection-background-color:yellow");
-    ui->gbLayer->setStyleSheet("color:blue;border-color:blue;foreground-color:blue;selection-color:yellow;");
+   // ui->gbLayer->setStyleSheet("color:blue;border-color:blue;foreground-color:blue;selection-color:yellow;");
     ui->drawingwidget->setStyleSheet("background-color:lightcyan;");
 }
 
@@ -144,16 +147,20 @@ void MainWindow::RemoveLayer(){
 }
 
 void MainWindow::LayerCellChanged(int row, int col) {
-    if (col == 2) {  // name
+    if (col == 2) {
         QString name = ui->tableWidget->item(row,col)->text();
         layerwidget->updateName(row,name);
+
     }
 }
 
-
-
-
-
+void MainWindow::LayerCellClicked(int row, int col) {
+    if (col == 3) {
+        QColorDialog * dlg = new QColorDialog(layerwidget->getCurrentColor(),this);
+        if (dlg->exec() == QDialog::Accepted)
+            layerwidget->updateColor(row,dlg->selectedColor());
+    }
+}
 
 void MainWindow::tbRectangleClick() {
     ui->textEdit->append("Rect");

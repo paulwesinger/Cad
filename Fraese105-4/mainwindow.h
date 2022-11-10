@@ -32,6 +32,7 @@ public slots:
     void addLayer();
     void RemoveLayer();
     void LayerCellChanged(int row, int col);
+    void LayerCellClicked(int row, int col);
 
     void tbRectangleClick();
     void tbLineClick();
@@ -40,12 +41,10 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
-
     LayerWidget * layerwidget;
     Einstellungen * einstellungen;
 
-    //  QGraphicsScene * graphicsScene;
-  //  QGraphicsView * graphicsView;
+    QColor newLayerColor;
 
     void init();
     void initConnections();
