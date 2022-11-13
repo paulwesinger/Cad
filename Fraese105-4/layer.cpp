@@ -56,7 +56,6 @@ bool Layer::IsActive()          { return _Active; }
 LayerWidget::LayerWidget()
 {
     _ActiveLayer = 0;
-    _SelectedLayer = 0;
     addRow("Test1");
 }
 
@@ -64,10 +63,7 @@ LayerWidget::LayerWidget(QTableWidget * tbw)
 
 {
     tableWidget = tbw;
-
     _ActiveLayer = 0;
-    _SelectedLayer = 0;
-
     addRow("Test");
     currentColor = layers[0].getLayerColor();
 }
@@ -83,6 +79,15 @@ void LayerWidget::initConnections() {
 QColor LayerWidget::getCurrentColor() {
     return currentColor;
 }
+
+void LayerWidget::setActiveLayer(uint l) {
+    _ActiveLayer = l;
+}
+
+uint LayerWidget::getActiveLayer(){
+    return _ActiveLayer;
+}
+
 //----------------------------------------------------------
 // slots
 //----------------------------------------------------------
@@ -113,6 +118,7 @@ void LayerWidget::addRow(QString name){
         tableWidget->setCellWidget(row,1,cbLocked);
         tableWidget->setItem(row,2,wiName);
         tableWidget->setCellWidget(row,3,wColor);
+
     }
 }
 

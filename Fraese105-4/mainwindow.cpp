@@ -26,21 +26,20 @@ MainWindow::~MainWindow()
 void MainWindow::init() {
 
     //------------------------------------------
-    // setup Mainwindow
-    //------------------------------------------
-
-//#62a0ea                         "background-color: yellow;"
-  //  "selection-color: yellow;"
-  //  "selection-background-color: blue;");
-
-
-    //------------------------------------------
     // add dialogs
     //------------------------------------------
     einstellungen = new Einstellungen(this);
 
     initLayerWidget();
     setDarkColorShem();
+
+    //------------------------------------------
+    // setup glWin
+    //------------------------------------------
+    glWidget = new GlWidget(ui->drawingwidget);
+    glWidget->initializeGL();
+    glWidget ->resizeGL(ui->drawingwidget->width(), ui->drawingwidget->height());
+
 }
 
 void MainWindow::initLayerWidget() {
@@ -152,14 +151,19 @@ void MainWindow::LayerCellChanged(int row, int col) {
         layerwidget->updateName(row,name);
 
     }
+    layerwidget->setActiveLayer((uint)row);
 }
 
 void MainWindow::LayerCellClicked(int row, int col) {
     if (col == 3) {
         QColorDialog * dlg = new QColorDialog(layerwidget->getCurrentColor(),this);
-        if (dlg->exec() == QDialog::Accepted)
+        if (dlg->exec() == QDialog::Accepted) {
             layerwidget->updateColor(row,dlg->selectedColor());
+            glWidget->setClearColor(dlg->selectedColor().toRgb());
+            glWidget->update();
+        }
     }
+    layerwidget->setActiveLayer((uint)row);
 }
 
 void MainWindow::tbRectangleClick() {

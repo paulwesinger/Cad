@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets opengl
 
 CONFIG += c++17
 
@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     einstellungendialog.cpp \
+    glwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     layer.cpp
 
 HEADERS += \
     einstellungendialog.h \
+    glwidget.h \
     mainwindow.h \
     layer.h
 

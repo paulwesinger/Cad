@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../Fraese105-4 -I. -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I. -I/../lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I../Fraese105-4 -I. -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I. -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = Fraese105-41.0.0
 DISTDIR = /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/.tmp/Fraese105-41.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib64/libQt5OpenGL.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,12 +53,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Fraese105-4/einstellungendialog.cpp \
+		../Fraese105-4/glwidget.cpp \
 		../Fraese105-4/main.cpp \
 		../Fraese105-4/mainwindow.cpp \
 		../Fraese105-4/layer.cpp qrc_icons.cpp \
 		moc_einstellungendialog.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = einstellungendialog.o \
+		glwidget.o \
 		main.o \
 		mainwindow.o \
 		layer.o \
@@ -144,8 +146,10 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		../Fraese105-4/Fraese105-4.pro ../Fraese105-4/einstellungendialog.h \
+		../Fraese105-4/glwidget.h \
 		../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h ../Fraese105-4/einstellungendialog.cpp \
+		../Fraese105-4/glwidget.cpp \
 		../Fraese105-4/main.cpp \
 		../Fraese105-4/mainwindow.cpp \
 		../Fraese105-4/layer.cpp
@@ -337,8 +341,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Fraese105-4/icons.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.h ../Fraese105-4/mainwindow.h ../Fraese105-4/layer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.cpp ../Fraese105-4/layer.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.h ../Fraese105-4/glwidget.h ../Fraese105-4/mainwindow.h ../Fraese105-4/layer.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/glwidget.cpp ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.cpp ../Fraese105-4/layer.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Fraese105-4/einstellungendialog.ui ../Fraese105-4/mainwindow.ui $(DISTDIR)/
 
 
@@ -385,14 +389,15 @@ compiler_moc_header_clean:
 moc_einstellungendialog.cpp: ../Fraese105-4/einstellungendialog.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
-	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/einstellungendialog.h -o moc_einstellungendialog.cpp
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/einstellungendialog.h -o moc_einstellungendialog.cpp
 
 moc_mainwindow.cpp: ../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h \
 		../Fraese105-4/einstellungendialog.h \
+		../Fraese105-4/glwidget.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
-	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/mainwindow.h -o moc_mainwindow.cpp
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/paul/workspace/CAD/main/build-Fraese105-4-Desktop-Debug/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/paul/workspace/CAD/main/Fraese105-4 -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../Fraese105-4/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -423,14 +428,19 @@ einstellungendialog.o: ../Fraese105-4/einstellungendialog.cpp ../Fraese105-4/ein
 		ui_einstellungendialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o einstellungendialog.o ../Fraese105-4/einstellungendialog.cpp
 
+glwidget.o: ../Fraese105-4/glwidget.cpp ../Fraese105-4/glwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../Fraese105-4/glwidget.cpp
+
 main.o: ../Fraese105-4/main.cpp ../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h \
-		../Fraese105-4/einstellungendialog.h
+		../Fraese105-4/einstellungendialog.h \
+		../Fraese105-4/glwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Fraese105-4/main.cpp
 
 mainwindow.o: ../Fraese105-4/mainwindow.cpp ../Fraese105-4/mainwindow.h \
 		../Fraese105-4/layer.h \
 		../Fraese105-4/einstellungendialog.h \
+		../Fraese105-4/glwidget.h \
 		ui_einstellungendialog.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Fraese105-4/mainwindow.cpp

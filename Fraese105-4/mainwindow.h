@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 #include "layer.h"
 #include "einstellungendialog.h"
+#include "glwidget.h"
 
 
 
@@ -43,8 +44,11 @@ private:
 
     LayerWidget * layerwidget;
     Einstellungen * einstellungen;
+    GlWidget * glWidget;
 
     QColor newLayerColor;
+
+
 
     void init();
     void initConnections();

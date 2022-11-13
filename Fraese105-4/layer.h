@@ -62,6 +62,8 @@ public:
     void addRow(QString name);
     void updateName(int row, QString name);
     void updateColor(int row, QColor col);
+    void setActiveLayer(uint l);
+    uint getActiveLayer();
     QColor getCurrentColor();
 
 private:
@@ -72,7 +74,6 @@ private:
     QVector<Layer> layers;
 
     uint _ActiveLayer;
-    uint _SelectedLayer;
 
     QTableWidget * tableWidget = NULL;
 
